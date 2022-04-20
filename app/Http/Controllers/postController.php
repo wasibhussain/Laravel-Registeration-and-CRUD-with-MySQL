@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
-class postController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,9 @@ class postController extends Controller
      */
     public function index()
     {
-        //
+
+       $posts =  Post::all();
+        return view('index' , compact('posts'));
     }
 
     /**
@@ -23,7 +26,8 @@ class postController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
+        
     }
 
     /**
@@ -34,7 +38,8 @@ class postController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      Post::create($request->all());
+          return redirect('/posts');
     }
 
     /**
@@ -45,7 +50,8 @@ class postController extends Controller
      */
     public function show($id)
     {
-    return "this is show method".$id;
+        $post = Post::findOrFail($id);
+        return view('show', compact('post'));
     }
 
     /**
@@ -56,7 +62,9 @@ class postController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        return view('edit', compact('post'));
     }
 
     /**
@@ -68,7 +76,9 @@ class postController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+        $post->update($request->all());
+        return redirect('/posts');
     }
 
     /**
@@ -79,6 +89,8 @@ class postController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $post = Post::whereId($id)->delete();
+
+       return redirect('/posts');
     }
 }

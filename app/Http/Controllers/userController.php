@@ -51,5 +51,12 @@ class userController extends Controller
 
       return view('arraylist', compact('people'));
     }
+
+    // public function create(){
+
+    //  return view('create');
+    // }
+
+    
 }
 
